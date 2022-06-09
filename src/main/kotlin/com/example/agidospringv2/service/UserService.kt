@@ -5,6 +5,7 @@ import com.example.agidospringv2.getUserDetailsManager
 import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Component
 class UserService {
@@ -25,8 +26,11 @@ class UserService {
     }
 
     fun createId(username: String): String {
+
         var salt = "5xD1"
         return Sha().calculateSH256("$salt$username:").encodeToByteArray().joinToString("")
+
+
     }
 
     private fun addAppUser(appUser: AppUser) {

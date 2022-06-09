@@ -2,6 +2,7 @@ package com.example.agidospringv2.service
 import com.example.agidospringv2.Sha
 import java.math.BigDecimal
 import java.time.ZonedDateTime
+import java.util.*
 
 class Transaction(val transactionType: TransactionType, val amount: BigDecimal, val actor: AppUser) {
     var transactionId= createTransactionId()
@@ -20,8 +21,9 @@ class Transaction(val transactionType: TransactionType, val amount: BigDecimal, 
 
     fun createTransactionId():String
     {
-        var salt = "TNT4U#"
+       var salt = "TNT4U#"
         return  Sha().calculateSH256("$salt#${actor.userId}#$amount#${actor.name}#${ZonedDateTime.now()}").encodeToByteArray().joinToString("")
+
     }
 
 

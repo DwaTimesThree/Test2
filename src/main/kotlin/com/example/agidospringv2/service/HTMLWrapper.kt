@@ -29,7 +29,7 @@ class HTMLWrapper {
 
     fun loadTestData(): String {
         return testDataService.loadTestData()
-            .joinToString("<br>") + "Für alle Test-Accounts ist das Passwort: test" + backButton()
+            .joinToString("<br>") + "<br>Für alle Test-Accounts ist das Passwort: test" + backButton()
     }
 
     fun registerCustomer(username: String, password: String): String {
@@ -86,7 +86,8 @@ class HTMLWrapper {
             amount = additionalValues.amount,
             transactionId = additionalValues.transactionId,
             from = additionalValues.fromstr,
-            to = additionalValues.tostr
+            to = additionalValues.tostr,
+                    targetUserId= additionalValues.targetUserId
         ).wrap(request)
 
     }
@@ -146,7 +147,7 @@ class HTMLWrapper {
                     )
 
                     map2.forEach { (k, v) ->
-                        add += fromToDisplay("/$v", k)
+                        add += it.fromToDisplay("/$v", k)
                     }
 
                     mutableMapOf<String, String>("auf Bestätigung wartende Transaktionen anzeigen." to env.getProperty("request.customer.show.pendingwithdrawals")!!).forEach { k, v ->
@@ -165,7 +166,7 @@ class HTMLWrapper {
                         "Transaktionen zeigen" to env.getProperty("request.all.show.transactions")!!,
                         "Transaktionssumme zeigen" to env.getProperty("request.all.show.transactionsum")!!,
                     ).forEach { k, v ->
-                        add += fromToDisplay("/$v", k)
+                        add += it.fromToDisplay("/$v", k)
                     }
 
                     mutableMapOf<String, String>("auf Bestätigung wartende Transaktionen anzeigen." to env.getProperty("request.serviceemployee.show.pendingwithdrawals")!!).forEach { k, v ->
@@ -199,6 +200,11 @@ class HTMLWrapper {
 
     fun fromToDisplay(url: String, infoText: String): String {
         return "<form action=\"${url}\" method=\"get\" target=\"_blank\">\n" + "  <label for=\"from\">von:</label>\n" + "  <input type=\"text\" id=\"from\" name=\"from\">\n" + "  <label for=\"to\">bis</label>\n" + "  <input type=\"text\" id=\"to\" name=\"to\">  <input type=\"submit\" value=\"$infoText\">\n" + "</form>"
+    }
+
+    fun AppUser.fromToDisplay(url: String, infoText: String): String {
+        return "<form action=\"${url}\" method=\"get\" target=\"_blank\">" + if(this.userType==UserType.ServiceEmployee){" <label for=\"userId\">UserId</label><input type=\"text\" id=\"userId\" name=\"userId\">"}else {""}+"<label for=\"from\">von:</label>\n" + "  <input type=\"text\" id=\"from\" name=\"from\">\n" + "  <label for=\"to\">bis</label>\n" + "  <input type=\"text\" id=\"to\" name=\"to\">  <input type=\"submit\" value=\"$infoText\">\n" + "</form>"
+
     }
 
     fun numberInput(url: String, text: String): String {

@@ -65,7 +65,7 @@ class Interim {
                 tc.transactionService=transactionService
                 println("Time")
                 tc.checkTimeErrors(from, to)?.let { return it.toErrorDTO() }
-                println("TargetUser")
+                println("TargetUserId: $targetUserId")
                 tc.checkTargetUserErrors(targetUserId)?.let { return it.toErrorDTO() }
                 println("Transaction")
                 tc.checkTransactionErrors(transactionId)?.let { return it.toErrorDTO() }
