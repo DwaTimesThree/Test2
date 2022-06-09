@@ -1,0 +1,32 @@
+request:
+  all:
+    register:
+      customer:
+        url: "registerCustomer"
+    show:
+      transactionsum: "showTransactionSum"
+      transactions: "showTransactions"
+  admin:
+    load:
+      testdata:
+        url: "loadTestData"
+    register:
+      serviceemployee:
+        url: "registerServiceEmployee"
+  customer:
+    deposit: "deposit"
+    withdraw: "withdraw"
+    show:
+      pendingwithdrawals: "showMyPendingWithdrawals"
+      transactions: "showMyTransactions"
+    authorize:
+      withdrawal: "authorizeWithdrawal"
+
+  serviceemployee:
+    show:
+      pendingwithdrawals: "showPendingWithdrawals"
+      richest: "richest"
+      transactions:
+        fromUser:
+          byId:
+            fromto: "showTransactionsFromTo"
